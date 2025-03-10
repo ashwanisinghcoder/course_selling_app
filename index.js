@@ -1,13 +1,12 @@
 const express = require('express');
 const app = express();
-import userRouter from './Routes/user';
-import courseRouter from './Routes/course';
+const { userRouter }= require('./Routes/user');
+const { courseRouter } = require('./Routes/course');
 
 app.use(express.json());
 
-app.post("/user", userRouter);
-
-app.post("/course", courseRouter);
+app.post("/api/v1/user", userRouter);
+app.post("/api/v1/course", courseRouter);
 
 
 app.listen(3000, () => {
