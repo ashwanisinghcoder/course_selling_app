@@ -6,7 +6,7 @@ const { courseRouter } = require('./Routes/course');
 app.use(express.json());
 
 app.post("/api/v1/user", userRouter);
-app.post("/api/v1/course", courseRouter);
+app.get("/api/v1/course", courseRouter);
 
 
 app.listen(3000, () => {
