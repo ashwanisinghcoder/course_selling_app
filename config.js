@@ -1,6 +1,6 @@
-const jwtadminsecret = "213483yrsdfy";
-const jwtsecret = "213483423";
+const jwtadminsecret = process.env.jwtadminsecret;
+const jwtsecret = process.env.jwtsecret;
 module.exports = {
-    jwtadminsecret: jwtadminsecret,
-    jwtsecret: jwtsecret
+    jwtadminsecret,
+    jwtsecret
 }

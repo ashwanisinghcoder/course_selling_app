@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-
+    
 const { jwtsecret } = require("../config");
 function usermiddleware(req, res, next) {
     const token = req.headers.token;
@@ -15,4 +15,4 @@ function usermiddleware(req, res, next) {
     }
 } 
 
-module.exports = usermiddleware;
+module.exports = usermiddleware
