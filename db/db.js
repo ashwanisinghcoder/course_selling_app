@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
-const user = require("../Routes/user");
 const { Schema } = mongoose;
-const { ObjectId } = mongoose.Schema;
-                           
+const db = async () => {
+    await mongoose.connect(process.env.MongoDBURI);
+    console.log(process.env.MongoDBURI);
+    console.log("Connected to MongoDB");
+};
+db();
+const { ObjectId } = mongoose.Schema.Types;
 const userSchema = new Schema({
     email: {type: String, unique: true},
     password: String,

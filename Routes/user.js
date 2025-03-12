@@ -41,18 +41,14 @@ userRouter.post('/signin',async (req, res) => {
         })
     }
 }) 
-userRouter.get('/course-purchase', usermiddleware, async (req, res) => {
-    const userId = req.userId;
-    const { courseID } = req.body;
-    const purchase = await purchaseModel.create({
-        userID: userId._id,
-        courseID: courseID
-    });
+userRouter.get("/purchases" ,usermiddleware, async (req,res)=>{
+    const userID = req.userID;
+    const purchases = await purchaseModel.find({ userID });
     res.json({
-        purchase: purchase
+        purchases
+    })
 })
-console.log(purchase);
-})
+
 module.exports ={
     userRouter: userRouter
     

@@ -9,12 +9,15 @@ const adminmiddleware = require("../middleware/adminmiddleware.js");
 adminRouter.post("/admin-signup", async (req,res)=>{
     const { email, password, firstname, lastname } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log(hashedPassword);
+    console.log(hashedPassword);
     await adminModel.create({
         email:  email,
         password: hashedPassword,
         firstname : firstname,
         lastname : lastname
     });
+    console.log(process.env.MongoDBURI);
     res.json({
         message: "admin signed up"
     })
@@ -56,22 +59,33 @@ adminRouter.post("/course-create", adminmiddleware,  async (req,res)=>{
         creator: creator
     });
     res.json({
-        course: course,
-        adminId: adminId
+        message: "course created",
+        course: course._id,
+    })
+})
+adminRouter.put("/course-update", adminmiddleware, async (req,res)=>{
+    const adminId = req.adminId;
+    const { courseID, title, description, price, image } = req.body;
+    const course = await courseModel.findOneAndUpdate({ _id: courseID , creatorID: adminId._id }, {
+        title: title,
+        description: description,
+        price: price,
+        image: image,
+    });
+    res.json({
+        message:"course updated",
+        course: course._id
+    })
+})
+
+adminRouter.get("/courses-list", adminmiddleware, async (req,res)=>{
+        const adminId = req.adminId._id;
+        const courses = await courseModel.find({creatorID: adminId});
+            res.json({
+                message: "courses list",
+                courses: courses
+            })
         
-    })
-})
-
-adminRouter.put("/course-update", adminmiddleware, (req,res)=>{
-    res.json({
-        message:"course updated"
-    })
-})
-
-adminRouter.get("/courses-list", adminmiddleware, (req,res)=>{
-    res.json({
-        message: 'course list'
-    })
 }) 
 module.exports = {
     adminRouter: adminRouter
